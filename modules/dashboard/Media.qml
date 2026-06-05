@@ -15,14 +15,9 @@ Item {
     id: root
 
     required property DrawerVisibilities visibilities
-    readonly property bool needsKeyboard: lyricMenuOpen
+    readonly property bool needsKeyboard: false
 
-    readonly property real nonAnimHeight: Math.max(cover.implicitHeight, lyricMenuOpen ? lyricMenu.implicitHeight : details.implicitHeight, Config.dashboard.showBongocat ? bongocat.implicitHeight : 0) + Tokens.padding.large * 2
-    readonly property real detailsHeightWithoutLyrics: details.implicitHeight - lyricsViewInDetails.implicitHeight
-
-    property bool lyricMenuOpen: false
-    property bool lyricsShowing: LyricsService.lyricsVisible && LyricsService.model.count != 0
-    property bool lyricsShowingDebounced: false
+    readonly property real nonAnimHeight: Math.max(cover.implicitHeight, details.implicitHeight, Config.dashboard.showBongocat ? bongocat.implicitHeight : 0) + Tokens.padding.large * 2
 
     property real playerProgress: {
         const active = Players.active;
@@ -40,15 +35,6 @@ Item {
         if (hours > 0)
             return `${hours}:${mins.toString().padStart(2, "0")}:${secs}`;
         return `${mins}:${secs}`;
-    }
-
-    onLyricsShowingChanged: {
-        if (lyricsShowing) {
-            lyricsHideDelay.stop();
-            lyricsShowingDebounced = true;
-        } else {
-            lyricsHideDelay.restart();
-        }
     }
 
     implicitWidth: cover.implicitWidth + details.implicitWidth + details.anchors.leftMargin + (Config.dashboard.showBongocat ? bongocat.implicitWidth + bongocat.anchors.leftMargin * 2 : 0) + Tokens.padding.large * 2
@@ -72,24 +58,8 @@ Item {
         onTriggered: {
             if (!Players.active)
                 return;
-            LyricsService.updatePosition();
             Players.active?.positionChanged();
         }
-    }
-
-    Timer {
-        id: lyricsHideDelay
-
-        interval: 300
-        repeat: false
-    }
-
-    Connections {
-        function onTriggered() {
-            root.lyricsShowingDebounced = false;
-        }
-
-        target: lyricsHideDelay
     }
 
     ServiceRef {
@@ -129,13 +99,6 @@ Item {
             sourceSize: {
                 const dpr = (QsWindow.window as QsWindow)?.devicePixelRatio ?? 1;
                 return Qt.size(width * dpr, height * dpr);
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    LyricsService.toggleVisibility();
-                }
             }
         }
     }
@@ -192,13 +155,6 @@ Item {
             wrapMode: Players.active ? Text.NoWrap : Text.WordWrap
         }
 
-        LyricsView {
-            id: lyricsViewInDetails
-
-            Layout.fillWidth: true
-            Layout.preferredHeight: 200
-        }
-
         RowLayout {
             id: controls
 
@@ -241,13 +197,6 @@ Item {
                 font.pointSize: Math.round(Tokens.font.size.large * 1.5)
                 disabled: !Players.active?.canGoNext
                 onClicked: Players.active?.next()
-            }
-
-            PlayerControl {
-                type: IconButton.Text
-                icon: "lyrics"
-                font.pointSize: Math.round(Tokens.font.size.large)
-                onClicked: root.lyricMenuOpen = !root.lyricMenuOpen
             }
         }
 
@@ -319,12 +268,11 @@ Item {
         id: leftSection
 
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: playerChanger.parent == leftSection ? -playerChanger.height : 0
         anchors.left: details.right
         anchors.leftMargin: Tokens.spacing.normal
 
-        visible: Config.dashboard.showBongocat && (lyricMenu.height === 0 || opacity > 0)
-        opacity: Config.dashboard.showBongocat && lyricMenu.height === 0 ? 1 : 0
+        visible: Config.dashboard.showBongocat
+        opacity: Config.dashboard.showBongocat ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {
@@ -354,32 +302,10 @@ Item {
         }
     }
 
-    LyricMenu {
-        id: lyricMenu
-
-        anchors.top: parent.top
-        anchors.left: details.right
-        anchors.right: parent.right
-        anchors.leftMargin: Tokens.spacing.normal
-
-        contentHeight: !root.lyricsShowingDebounced ? root.detailsHeightWithoutLyrics + Tokens.padding.large * 5 : root.detailsHeightWithoutLyrics + lyricsViewInDetails.implicitHeight
-
-        visible: root.lyricMenuOpen || height > 0
-        height: root.lyricMenuOpen ? implicitHeight : 0
-        clip: true
-
-        Behavior on height {
-            NumberAnimation {
-                duration: Tokens.anim.durations.normal
-                easing.type: Easing.OutCubic
-            }
-        }
-    }
-
     RowLayout {
         id: playerChanger
 
-        parent: !root.lyricsShowingDebounced ? details : leftSection
+        parent: details
         Layout.alignment: Qt.AlignHCenter
         spacing: Tokens.spacing.small
 

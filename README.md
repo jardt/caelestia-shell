@@ -243,8 +243,8 @@ For example, to disable the bar on DP-1:
 > - `utilities` (`toasts`, `vpn`)
 > - `services` (`useFahrenheit`, `useFahrenheitPerformance`, `useTwelveHourClock`,
 >   `gpuType`, `audioIncrement`, `brightnessIncrement`, `maxVolume`, `smartScheme`,
->   `defaultPlayer`, `playerAliases`, `showLyrics`, `lyricsBackend`)
-> - `paths` (`wallpaperDir`, `lyricsDir`)
+>   `defaultPlayer`, `playerAliases`)
+> - `paths` (`wallpaperDir`)
 >
 > </details>
 
@@ -643,7 +643,6 @@ For example, to disable the bar on DP-1:
         "noNotifsPic": "root:/assets/dino.png",
         "lockNoNotifsPic": "root:/assets/dino.png",
         "wallpaperDir": "~/Pictures/Wallpapers",
-        "lyricsDir": "~/Music/lyrics"
     },
     "services": {
         "audioIncrement": 0.1,
