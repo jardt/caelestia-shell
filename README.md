@@ -182,8 +182,7 @@ target wallpaper
 
 ### PFP/Wallpapers
 
-The profile picture for the dashboard is read from the file `~/.face`, so to set
-it you can copy your image to there or set it via the dashboard.
+The full dashboard has been trimmed down to the media view for this fork.
 
 The wallpapers for the wallpaper switcher are read from `~/Pictures/Wallpapers`
 by default. To change it, change the wallpapers path in `~/.config/caelestia/shell.json`.
@@ -236,14 +235,14 @@ For example, to disable the bar on DP-1:
 > - `general` (`logo`, `apps`, `idle`, `battery`)
 > - `bar.workspaces` (`perMonitorWorkspaces`, `specialWorkspaceIcons`, `windowIcons`)
 > - `bar.tray` (`iconSubs`, `hiddenIcons`)
-> - `dashboard` (`mediaUpdateInterval`, `resourceUpdateInterval`)
+> - `dashboard` (`mediaUpdateInterval`)
 > - `launcher` (`specialPrefix`, `actionPrefix`, `enableDangerousActions`, `vimKeybinds`,
 >   `favouriteApps`, `hiddenApps`, `actions`)
 > - `launcher.useFuzzy` (`apps`, `actions`, `schemes`, `variants`, `wallpapers`)
 > - `notifs` (`expire`, `fullscreen`, `defaultExpireTimeout`, `actionOnClick`)
 > - `lock` (`enableFprint`, `maxFprintTries`)
 > - `utilities` (`toasts`, `vpn`)
-> - `services` (`weatherLocation`, `useFahrenheit`, `useFahrenheitPerformance`, `useTwelveHourClock`,
+> - `services` (`useFahrenheit`, `useFahrenheitPerformance`, `useTwelveHourClock`,
 >   `gpuType`, `visualiserBars`, `audioIncrement`, `brightnessIncrement`, `maxVolume`, `smartScheme`,
 >   `defaultPlayer`, `playerAliases`, `showLyrics`, `lyricsBackend`)
 > - `paths` (`wallpaperDir`, `lyricsDir`)
@@ -491,10 +490,7 @@ For example, to disable the bar on DP-1:
     "dashboard": {
         "enabled": true,
         "showOnHover": true,
-        "showDashboard": true,
-        "showMedia": true,
-        "showPerformance": true,
-        "showWeather": true,
+        "showBongocat": true,
         "dragThreshold": 50,
         "mediaUpdateInterval": 500
     },
@@ -664,7 +660,6 @@ For example, to disable the bar on DP-1:
         "defaultPlayer": "Spotify",
         "gpuType": "",
         "playerAliases": [{ "from": "com.github.th_ch.youtube_music", "to": "YT Music" }],
-        "weatherLocation": "",
         "useFahrenheit": false,
         "useFahrenheitPerformance": false,
         "useTwelveHourClock": false,

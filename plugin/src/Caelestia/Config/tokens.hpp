@@ -173,7 +173,6 @@ class DashboardTokens : public ConfigObject {
     CONFIG_PROPERTY(int, mediaProgressSweep, 180)
     CONFIG_PROPERTY(int, mediaProgressThickness, 8)
     CONFIG_PROPERTY(int, resourceProgressThickness, 10)
-    CONFIG_PROPERTY(int, weatherWidth, 250)
     CONFIG_PROPERTY(int, mediaCoverArtSize, 150)
     CONFIG_PROPERTY(int, mediaVisualiserSize, 80)
     CONFIG_PROPERTY(int, resourceSize, 200)

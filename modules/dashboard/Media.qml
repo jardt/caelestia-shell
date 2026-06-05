@@ -18,7 +18,7 @@ Item {
     required property DrawerVisibilities visibilities
     readonly property bool needsKeyboard: lyricMenuOpen
 
-    readonly property real nonAnimHeight: Math.max(cover.implicitHeight + Tokens.sizes.dashboard.mediaVisualiserSize * 2, lyricMenuOpen ? lyricMenu.implicitHeight : details.implicitHeight, bongocat.implicitHeight) + Tokens.padding.large * 2
+    readonly property real nonAnimHeight: Math.max(cover.implicitHeight + Tokens.sizes.dashboard.mediaVisualiserSize * 2, lyricMenuOpen ? lyricMenu.implicitHeight : details.implicitHeight, Config.dashboard.showBongocat ? bongocat.implicitHeight : 0) + Tokens.padding.large * 2
     readonly property real detailsHeightWithoutLyrics: details.implicitHeight - lyricsViewInDetails.implicitHeight
 
     property bool lyricMenuOpen: false
@@ -52,7 +52,7 @@ Item {
         }
     }
 
-    implicitWidth: cover.implicitWidth + Tokens.sizes.dashboard.mediaVisualiserSize * 2 + details.implicitWidth + details.anchors.leftMargin + bongocat.implicitWidth + bongocat.anchors.leftMargin * 2 + Tokens.padding.large * 2
+    implicitWidth: cover.implicitWidth + Tokens.sizes.dashboard.mediaVisualiserSize * 2 + details.implicitWidth + details.anchors.leftMargin + (Config.dashboard.showBongocat ? bongocat.implicitWidth + bongocat.anchors.leftMargin * 2 : 0) + Tokens.padding.large * 2
     implicitHeight: nonAnimHeight
 
     Behavior on implicitHeight {
@@ -381,8 +381,8 @@ Item {
         anchors.left: details.right
         anchors.leftMargin: Tokens.spacing.normal
 
-        visible: lyricMenu.height === 0 || opacity > 0
-        opacity: lyricMenu.height === 0 ? 1 : 0
+        visible: Config.dashboard.showBongocat && (lyricMenu.height === 0 || opacity > 0)
+        opacity: Config.dashboard.showBongocat && lyricMenu.height === 0 ? 1 : 0
 
         Behavior on opacity {
             NumberAnimation {
@@ -394,8 +394,8 @@ Item {
         Item {
             id: bongocat
 
-            implicitWidth: visualiser.width
-            implicitHeight: visualiser.height
+            implicitWidth: Config.dashboard.showBongocat ? visualiser.width : 0
+            implicitHeight: Config.dashboard.showBongocat ? visualiser.height : 0
 
             AnimatedImage {
                 anchors.centerIn: parent

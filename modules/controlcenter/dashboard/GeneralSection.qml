@@ -2,10 +2,8 @@ import ".."
 import "../components"
 import QtQuick
 import QtQuick.Layouts
-import Caelestia.Config
 import qs.components
 import qs.components.controls
-import qs.services
 
 SectionContainer {
     id: root
@@ -38,48 +36,12 @@ SectionContainer {
         }
     }
 
-    RowLayout {
-        Layout.fillWidth: true
-        spacing: Tokens.spacing.normal
-
-        SwitchRow {
-            Layout.fillWidth: true
-            label: qsTr("Show Dashboard tab")
-            checked: root.rootItem.showDashboard
-            onToggled: checked => {
-                root.rootItem.showDashboard = checked;
-                root.rootItem.saveConfig();
-            }
-        }
-
-        SwitchRow {
-            Layout.fillWidth: true
-            label: qsTr("Show Media tab")
-            checked: root.rootItem.showMedia
-            onToggled: checked => {
-                root.rootItem.showMedia = checked;
-                root.rootItem.saveConfig();
-            }
-        }
-
-        SwitchRow {
-            Layout.fillWidth: true
-            label: qsTr("Show Performance tab")
-            checked: root.rootItem.showPerformance
-            onToggled: checked => {
-                root.rootItem.showPerformance = checked;
-                root.rootItem.saveConfig();
-            }
-        }
-
-        SwitchRow {
-            Layout.fillWidth: true
-            label: qsTr("Show Weather tab")
-            checked: root.rootItem.showWeather
-            onToggled: checked => {
-                root.rootItem.showWeather = checked;
-                root.rootItem.saveConfig();
-            }
+    SwitchRow {
+        label: qsTr("Show bongo cat")
+        checked: root.rootItem.showBongocat
+        onToggled: checked => {
+            root.rootItem.showBongocat = checked;
+            root.rootItem.saveConfig();
         }
     }
 
