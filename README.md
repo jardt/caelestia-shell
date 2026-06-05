@@ -367,14 +367,7 @@ For example, to disable the bar on DP-1:
             },
             "invertColors": false
         },
-        "enabled": true,
-        "visualiser": {
-            "blur": false,
-            "enabled": false,
-            "autoHide": true,
-            "rounding": 1,
-            "spacing": 1
-        }
+        "enabled": true
     },
     "bar": {
         "activeWindow": {

@@ -49,10 +49,6 @@ Item {
     property bool desktopClockInvertColors: Config.background.desktopClock.invertColors ?? false
     property bool backgroundEnabled: Config.background.enabled ?? true
     property bool wallpaperEnabled: Config.background.wallpaperEnabled ?? true
-    property bool visualiserEnabled: Config.background.visualiser.enabled ?? false
-    property bool visualiserAutoHide: Config.background.visualiser.autoHide ?? true
-    property real visualiserRounding: Config.background.visualiser.rounding ?? 1
-    property real visualiserSpacing: Config.background.visualiser.spacing ?? 1
 
     function saveConfig() {
         GlobalConfig.appearance.anim.durations.scale = root.animDurationsScale;
@@ -83,11 +79,6 @@ Item {
         GlobalConfig.background.desktopClock.invertColors = root.desktopClockInvertColors;
 
         GlobalConfig.background.wallpaperEnabled = root.wallpaperEnabled;
-
-        GlobalConfig.background.visualiser.enabled = root.visualiserEnabled;
-        GlobalConfig.background.visualiser.autoHide = root.visualiserAutoHide;
-        GlobalConfig.background.visualiser.rounding = root.visualiserRounding;
-        GlobalConfig.background.visualiser.spacing = root.visualiserSpacing;
 
         GlobalConfig.border.rounding = root.borderRounding;
         GlobalConfig.border.thickness = root.borderThickness;
