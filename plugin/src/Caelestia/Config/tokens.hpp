@@ -149,7 +149,6 @@ class BarTokens : public ConfigObject {
     QML_ANONYMOUS
 
     CONFIG_PROPERTY(int, innerWidth, 40)
-    CONFIG_PROPERTY(int, windowPreviewSize, 400)
     CONFIG_PROPERTY(int, trayMenuWidth, 300)
     CONFIG_PROPERTY(int, batteryWidth, 250)
     CONFIG_PROPERTY(int, networkWidth, 320)
