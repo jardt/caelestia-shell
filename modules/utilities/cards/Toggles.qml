@@ -110,18 +110,6 @@ StyledRect {
                     }
                 }
                 DelegateChoice {
-                    roleValue: "settings"
-                    delegate: Toggle {
-                        icon: "settings"
-                        inactiveOnColour: Colours.palette.m3onSurfaceVariant
-                        toggle: false
-                        onClicked: {
-                            root.visibilities.utilities = false;
-                            root.popouts.detach("network");
-                        }
-                    }
-                }
-                DelegateChoice {
                     roleValue: "gameMode"
                     delegate: Toggle {
                         icon: "gamepad"

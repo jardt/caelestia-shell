@@ -3,7 +3,6 @@
 #include "backgroundconfig.hpp"
 #include "barconfig.hpp"
 #include "borderconfig.hpp"
-#include "controlcenterconfig.hpp"
 #include "dashboardconfig.hpp"
 #include "generalconfig.hpp"
 #include "launcherconfig.hpp"
@@ -39,7 +38,6 @@ GlobalConfig::GlobalConfig(QObject* parent)
     , m_bar(new BarConfig(this))
     , m_border(new BorderConfig(this))
     , m_dashboard(new DashboardConfig(this))
-    , m_controlCenter(new ControlCenterConfig(this))
     , m_launcher(new LauncherConfig(this))
     , m_notifs(new NotifsConfig(this))
     , m_osd(new OsdConfig(this))
@@ -60,7 +58,6 @@ GlobalConfig::GlobalConfig(GlobalConfig* fallback, const QString& filePath, cons
     , m_bar(new BarConfig(this))
     , m_border(new BorderConfig(this))
     , m_dashboard(new DashboardConfig(this))
-    , m_controlCenter(new ControlCenterConfig(this))
     , m_launcher(new LauncherConfig(this))
     , m_notifs(new NotifsConfig(this))
     , m_osd(new OsdConfig(this))

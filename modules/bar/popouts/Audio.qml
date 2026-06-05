@@ -102,17 +102,5 @@ Item {
                 }
             }
         }
-
-        IconTextButton {
-            Layout.fillWidth: true
-            Layout.topMargin: Tokens.spacing.normal
-            inactiveColour: Colours.palette.m3primaryContainer
-            inactiveOnColour: Colours.palette.m3onPrimaryContainer
-            verticalPadding: Tokens.padding.small
-            text: qsTr("Open settings")
-            icon: "settings"
-
-            onClicked: root.popouts.detachRequested("audio")
-        }
     }
 }

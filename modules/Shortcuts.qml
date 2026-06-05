@@ -4,21 +4,12 @@ import Quickshell.Io
 import Caelestia
 import qs.components.misc
 import qs.services
-import qs.modules.controlcenter
 
 Scope {
     id: root
 
     property bool launcherInterrupted
     readonly property bool hasFullscreen: Hypr.focusedWorkspace?.toplevels.values.some(t => t.lastIpcObject.fullscreen > 1) ?? false
-
-    // qmllint disable unresolved-type
-    CustomShortcut {
-        // qmllint enable unresolved-type
-        name: "controlCenter"
-        description: "Open control center"
-        onPressed: WindowFactory.create()
-    }
 
     // qmllint disable unresolved-type
     CustomShortcut {
@@ -126,14 +117,6 @@ Scope {
         }
 
         target: "drawers"
-    }
-
-    IpcHandler {
-        function open(): void {
-            WindowFactory.create();
-        }
-
-        target: "controlCenter"
     }
 
     IpcHandler {

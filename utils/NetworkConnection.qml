@@ -7,17 +7,13 @@ import qs.services
  * NetworkConnection
  *
  * Centralized utility for network connection logic. Provides a single source of truth
- * for connecting to wireless networks, eliminating code duplication across
- * controlcenter components and bar popouts.
+ * for connecting to wireless networks from bar popouts.
  *
  * Usage:
  * ```qml
  * import qs.utils
  *
- * // With Session object (controlcenter)
- * NetworkConnection.handleConnect(network, session);
- *
- * // Without Session object (bar popouts) - provide password dialog callback
+ * // Provide password dialog callback
  * NetworkConnection.handleConnect(network, null, (network) => {
  *     // Show password dialog
  *     root.passwordNetwork = network;
@@ -34,7 +30,7 @@ QtObject {
      * then connects to the target network.
      *
      * @param network The network object to connect to (must have ssid property)
-     * @param session Optional Session object (for controlcenter - must have network property with showPasswordDialog and pendingNetwork)
+     * @param session Optional object with network password dialog state
      * @param onPasswordNeeded Optional callback function(network) called when password is needed (for bar popouts)
      */
     function handleConnect(network, session, onPasswordNeeded): void {
@@ -58,7 +54,7 @@ QtObject {
      * and shows password dialog if needed.
      *
      * @param network The network object to connect to (must have ssid, isSecure, bssid properties)
-     * @param session Optional Session object (for controlcenter - must have network property with showPasswordDialog and pendingNetwork)
+     * @param session Optional object with network password dialog state
      * @param onPasswordNeeded Optional callback function(network) called when password is needed (for bar popouts)
      */
     function connectToNetwork(network, session, onPasswordNeeded): void {

@@ -278,18 +278,6 @@ public:
         : ConfigObject(parent) {}
 };
 
-class ControlCenterTokens : public ConfigObject {
-    Q_OBJECT
-    QML_ANONYMOUS
-
-    CONFIG_PROPERTY(qreal, heightMult, 0.7)
-    CONFIG_PROPERTY(qreal, ratio, 16.0 / 9.0)
-
-public:
-    explicit ControlCenterTokens(QObject* parent = nullptr)
-        : ConfigObject(parent) {}
-};
-
 class SizeTokens : public ConfigObject {
     Q_OBJECT
     QML_ANONYMOUS
@@ -304,7 +292,6 @@ class SizeTokens : public ConfigObject {
     CONFIG_SUBOBJECT(UtilitiesTokens, utilities)
     CONFIG_SUBOBJECT(LockTokens, lock)
     CONFIG_SUBOBJECT(WInfoTokens, winfo)
-    CONFIG_SUBOBJECT(ControlCenterTokens, controlCenter)
 
 public:
     explicit SizeTokens(QObject* parent = nullptr)
@@ -318,8 +305,7 @@ public:
         , m_sidebar(new SidebarTokens(this))
         , m_utilities(new UtilitiesTokens(this))
         , m_lock(new LockTokens(this))
-        , m_winfo(new WInfoTokens(this))
-        , m_controlCenter(new ControlCenterTokens(this)) {}
+        , m_winfo(new WInfoTokens(this)) {}
 };
 
 class TokenConfig : public RootConfig {

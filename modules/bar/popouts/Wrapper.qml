@@ -2,12 +2,10 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Quickshell.Hyprland
 import Quickshell.Wayland
 import Caelestia.Config
 import qs.components
 import qs.services
-import qs.modules.controlcenter
 
 Item {
     id: root
@@ -16,20 +14,14 @@ Item {
     required property real offsetScale
 
     readonly property alias content: content
-    readonly property alias winfo: winfo
-    readonly property alias controlCenter: controlCenter
 
     readonly property real nonAnimWidth: children.find(c => c.shouldBeActive)?.implicitWidth ?? content.implicitWidth
     readonly property real nonAnimHeight: children.find(c => c.shouldBeActive)?.implicitHeight ?? content.implicitHeight
     readonly property Item current: (content.item as Content)?.current ?? null
-    readonly property bool isDetached: detachedMode.length > 0
 
     property alias currentName: popoutState.currentName
     property alias hasCurrent: popoutState.hasCurrent
     property real currentCenter
-
-    property string detachedMode
-    property string queuedMode
 
     // Dummy object so Tokens attached prop resolves to global config
     // Anim configs are not per-monitor
@@ -37,23 +29,8 @@ Item {
     property int animLength: dummy.Tokens.anim.durations.expressiveDefaultSpatial
     property var animCurve: dummy.Tokens.anim.expressiveDefaultSpatial // The easingCurve type is Qt 6.11+ so we gotta use var for now
 
-    function setAnims(detach: bool): void {
-        const type = `expressive${detach ? "Slow" : "Default"}Spatial`;
-        animLength = dummy.Tokens.anim.durations[type];
-        animCurve = dummy.Tokens.anim[type];
-    }
-
-    function detach(mode: string): void {
-        setAnims(true);
-        queuedMode = mode;
-        detachedMode = "any";
-        setAnims(false);
-        focus = true;
-    }
-
     function close(): void {
         hasCurrent = false;
-        detachedMode = "";
     }
 
     implicitWidth: nonAnimWidth
@@ -81,18 +58,10 @@ Item {
 
     PopoutState {
         id: popoutState
-
-        onDetachRequested: mode => root.detach(mode)
-    }
-
-    HyprlandFocusGrab {
-        active: root.isDetached
-        windows: [QsWindow.window]
-        onCleared: root.close()
     }
 
     Binding {
-        when: root.isDetached || (root.hasCurrent && root.currentName === "wirelesspassword")
+        when: root.hasCurrent && root.currentName === "wirelesspassword"
 
         target: QsWindow.window
         property: "WlrLayershell.keyboardFocus"
@@ -102,24 +71,11 @@ Item {
     Comp {
         id: content
 
-        shouldBeActive: root.hasCurrent && !root.detachedMode
+        shouldBeActive: root.hasCurrent
         anchors.fill: parent
 
         sourceComponent: Content {
             popouts: popoutState
-        }
-    }
-
-    Comp {
-        id: controlCenter
-
-        shouldBeActive: root.detachedMode === "any"
-        anchors.centerIn: parent
-
-        sourceComponent: ControlCenter {
-            screen: root.screen
-            active: root.queuedMode
-            onClose: root.close()
         }
     }
 
