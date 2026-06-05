@@ -8,7 +8,6 @@ qml_module(caelestia-internal
         hyprextras.cpp
         logindmanager.cpp
         sparklineitem.cpp
-        visualiserbars.cpp
     LIBRARIES
         Qt::Gui
         Qt::Quick

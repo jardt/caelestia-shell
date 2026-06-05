@@ -2,7 +2,6 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Shapes
 import Quickshell
 import Quickshell.Services.Mpris
 import Caelestia.Config
@@ -18,7 +17,7 @@ Item {
     required property DrawerVisibilities visibilities
     readonly property bool needsKeyboard: lyricMenuOpen
 
-    readonly property real nonAnimHeight: Math.max(cover.implicitHeight + Tokens.sizes.dashboard.mediaVisualiserSize * 2, lyricMenuOpen ? lyricMenu.implicitHeight : details.implicitHeight, Config.dashboard.showBongocat ? bongocat.implicitHeight : 0) + Tokens.padding.large * 2
+    readonly property real nonAnimHeight: Math.max(cover.implicitHeight, lyricMenuOpen ? lyricMenu.implicitHeight : details.implicitHeight, Config.dashboard.showBongocat ? bongocat.implicitHeight : 0) + Tokens.padding.large * 2
     readonly property real detailsHeightWithoutLyrics: details.implicitHeight - lyricsViewInDetails.implicitHeight
 
     property bool lyricMenuOpen: false
@@ -52,7 +51,7 @@ Item {
         }
     }
 
-    implicitWidth: cover.implicitWidth + Tokens.sizes.dashboard.mediaVisualiserSize * 2 + details.implicitWidth + details.anchors.leftMargin + (Config.dashboard.showBongocat ? bongocat.implicitWidth + bongocat.anchors.leftMargin * 2 : 0) + Tokens.padding.large * 2
+    implicitWidth: cover.implicitWidth + details.implicitWidth + details.anchors.leftMargin + (Config.dashboard.showBongocat ? bongocat.implicitWidth + bongocat.anchors.leftMargin * 2 : 0) + Tokens.padding.large * 2
     implicitHeight: nonAnimHeight
 
     Behavior on implicitHeight {
@@ -94,64 +93,7 @@ Item {
     }
 
     ServiceRef {
-        service: Audio.cava
-    }
-
-    ServiceRef {
         service: Audio.beatTracker
-    }
-
-    Shape {
-        id: visualiser
-
-        readonly property real centerX: width / 2
-        readonly property real centerY: height / 2
-        readonly property real innerX: cover.implicitWidth / 2 + Tokens.spacing.small
-        readonly property real innerY: cover.implicitHeight / 2 + Tokens.spacing.small
-        property color colour: Colours.palette.m3primary
-
-        anchors.fill: cover
-        anchors.margins: -Tokens.sizes.dashboard.mediaVisualiserSize
-
-        asynchronous: true
-        preferredRendererType: Shape.CurveRenderer
-        data: visualiserBars.instances
-    }
-
-    Variants {
-        id: visualiserBars
-
-        model: Array.from({
-            length: GlobalConfig.services.visualiserBars
-        }, (_, i) => i)
-
-        ShapePath {
-            id: visualiserBar
-
-            required property int modelData
-            readonly property real value: Math.max(1e-3, Math.min(1, Audio.cava.values[modelData]))
-
-            readonly property real angle: modelData * 2 * Math.PI / GlobalConfig.services.visualiserBars
-            readonly property real magnitude: value * root.Tokens.sizes.dashboard.mediaVisualiserSize
-            readonly property real cos: Math.cos(angle)
-            readonly property real sin: Math.sin(angle)
-
-            capStyle: root.Tokens.rounding.scale === 0 ? ShapePath.SquareCap : ShapePath.RoundCap
-            strokeWidth: 360 / GlobalConfig.services.visualiserBars - root.Tokens.spacing.small / 4
-            strokeColor: Colours.palette.m3primary
-
-            startX: visualiser.centerX + (visualiser.innerX + strokeWidth / 2) * cos
-            startY: visualiser.centerY + (visualiser.innerY + strokeWidth / 2) * sin
-
-            PathLine {
-                x: visualiser.centerX + (visualiser.innerX + visualiserBar.strokeWidth / 2 + visualiserBar.magnitude) * visualiserBar.cos
-                y: visualiser.centerY + (visualiser.innerY + visualiserBar.strokeWidth / 2 + visualiserBar.magnitude) * visualiserBar.sin
-            }
-
-            Behavior on strokeColor {
-                CAnim {}
-            }
-        }
     }
 
     StyledClippingRect {
@@ -159,7 +101,7 @@ Item {
 
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        anchors.leftMargin: Tokens.padding.large + Tokens.sizes.dashboard.mediaVisualiserSize
+        anchors.leftMargin: Tokens.padding.large
 
         implicitWidth: Tokens.sizes.dashboard.mediaCoverArtSize
         implicitHeight: Tokens.sizes.dashboard.mediaCoverArtSize
@@ -202,7 +144,7 @@ Item {
         id: details
 
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: visualiser.right
+        anchors.left: cover.right
         anchors.leftMargin: Tokens.spacing.normal
 
         spacing: Tokens.spacing.small
@@ -394,14 +336,14 @@ Item {
         Item {
             id: bongocat
 
-            implicitWidth: Config.dashboard.showBongocat ? visualiser.width : 0
-            implicitHeight: Config.dashboard.showBongocat ? visualiser.height : 0
+            implicitWidth: Config.dashboard.showBongocat ? cover.width : 0
+            implicitHeight: Config.dashboard.showBongocat ? cover.height : 0
 
             AnimatedImage {
                 anchors.centerIn: parent
 
-                width: visualiser.width * 0.75
-                height: visualiser.height * 0.75
+                width: cover.width * 0.75
+                height: cover.height * 0.75
 
                 playing: Players.active?.isPlaying ?? false
                 speed: Audio.beatTracker.bpm / Config.general.mediaGifSpeedAdjustment // qmllint disable unresolved-type

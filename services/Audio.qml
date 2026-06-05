@@ -163,12 +163,6 @@ Singleton {
         objects: [...root.sinks, ...root.sources, ...root.streams]
     }
 
-    CavaProvider {
-        id: cava
-
-        bars: GlobalConfig.services.visualiserBars
-    }
-
     BeatTracker {
         id: beatTracker
     }

@@ -79,7 +79,6 @@ Dependencies:
 -   [`ddcutil`](https://github.com/rockowitz/ddcutil)
 -   [`brightnessctl`](https://github.com/Hummer12007/brightnessctl)
 -   [`app2unit`](https://github.com/Vladimir-csp/app2unit)
--   [`libcava`](https://github.com/LukashonakV/cava)
 -   [`networkmanager`](https://networkmanager.dev)
 -   [`lm-sensors`](https://github.com/lm-sensors/lm-sensors)
 -   [`fish`](https://github.com/fish-shell/fish-shell)
@@ -243,7 +242,7 @@ For example, to disable the bar on DP-1:
 > - `lock` (`enableFprint`, `maxFprintTries`)
 > - `utilities` (`toasts`, `vpn`)
 > - `services` (`useFahrenheit`, `useFahrenheitPerformance`, `useTwelveHourClock`,
->   `gpuType`, `visualiserBars`, `audioIncrement`, `brightnessIncrement`, `maxVolume`, `smartScheme`,
+>   `gpuType`, `audioIncrement`, `brightnessIncrement`, `maxVolume`, `smartScheme`,
 >   `defaultPlayer`, `playerAliases`, `showLyrics`, `lyricsBackend`)
 > - `paths` (`wallpaperDir`, `lyricsDir`)
 >
@@ -657,7 +656,6 @@ For example, to disable the bar on DP-1:
         "useFahrenheitPerformance": false,
         "useTwelveHourClock": false,
         "smartScheme": true,
-        "visualiserBars": 45
     },
     "session": {
         "dragThreshold": 30,
