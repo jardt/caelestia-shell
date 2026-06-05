@@ -28,14 +28,9 @@ class GeneralIdle : public ConfigObject {
     Q_OBJECT
     QML_ANONYMOUS
 
-    CONFIG_GLOBAL_PROPERTY(bool, lockBeforeSleep, true)
     CONFIG_GLOBAL_PROPERTY(bool, inhibitWhenAudio, true)
     CONFIG_GLOBAL_PROPERTY(QVariantList, timeouts,
         {
-            vmap({
-                { u"timeout"_s, 180 },
-                { u"idleAction"_s, u"lock"_s },
-            }),
             vmap({
                 { u"timeout"_s, 300 },
                 { u"idleAction"_s, u"dpms off"_s },

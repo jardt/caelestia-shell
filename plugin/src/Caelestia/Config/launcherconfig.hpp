@@ -107,12 +107,6 @@ class LauncherConfig : public ConfigObject {
                 { u"dangerous"_s, true },
             }),
             vmap({
-                { u"name"_s, u"Lock"_s },
-                { u"icon"_s, u"lock"_s },
-                { u"description"_s, u"Lock the current session"_s },
-                { u"command"_s, QStringList{ u"loginctl"_s, u"lock-session"_s } },
-            }),
-            vmap({
                 { u"name"_s, u"Sleep"_s },
                 { u"icon"_s, u"bedtime"_s },
                 { u"description"_s, u"Suspend then hibernate"_s },
