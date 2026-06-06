@@ -62,10 +62,6 @@ Item {
         }
     }
 
-    ServiceRef {
-        service: Audio.beatTracker
-    }
-
     StyledClippingRect {
         id: cover
 
@@ -294,7 +290,7 @@ Item {
                 height: cover.height * 0.75
 
                 playing: Players.active?.isPlaying ?? false
-                speed: Audio.beatTracker.bpm / Config.general.mediaGifSpeedAdjustment // qmllint disable unresolved-type
+                speed: 1
                 source: Paths.absolutePath(Config.paths.mediaGif)
                 asynchronous: true
                 fillMode: AnimatedImage.PreserveAspectFit
